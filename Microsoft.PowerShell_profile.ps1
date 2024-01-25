@@ -76,7 +76,6 @@ Set-Alias vim nvim
 Set-Alias lg launch_lazygit
 Set-Alias d devenv
 # Set-Alias pnpm launch_pnpx
-New-Alias c codium
 New-Alias g git
 New-Alias dv devs
 New-Alias tld tldr_function
@@ -102,3 +101,7 @@ function hist {
   Write-Host "Buscando en historial {`$_ -like `"*$find*`"}"; 
   Get-Content (Get-PSReadlineOption).HistorySavePath | ? {$_ -like "*$find*"} | Get-Unique | fzf
 }
+
+
+# Con esto puedo medir el performance hit de cada linea
+# Measure-Script -Top 3 $profile
