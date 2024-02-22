@@ -105,3 +105,8 @@ function hist {
 
 # Con esto puedo medir el performance hit de cada linea
 # Measure-Script -Top 3 $profile
+
+function previewSearchedFiles {
+  param([String]$search)
+  fd $search | fzf --preview 'bat --color=always {}'
+}
