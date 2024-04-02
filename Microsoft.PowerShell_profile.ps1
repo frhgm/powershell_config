@@ -110,3 +110,9 @@ function previewSearchedFiles {
   param([String]$search)
   fd $search | fzf --preview 'bat --color=always {}'
 }
+
+function touch
+{
+  $nombreArchivo = $args;
+  New-Item -ItemType file -Path $nombreArchivo
+}
