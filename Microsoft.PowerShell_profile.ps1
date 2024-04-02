@@ -22,49 +22,60 @@ $lg = "lazygit"
 $LIBGL_ALWAYS_SOFTWARE = 0
 $ENV:STARSHIP_CONFIG = "$HOME\AppData\Local\Starship\starship.toml"
 
-function log {
-   git log --graph --simplify-by-decoration --pretty=format:'%d' --all --decorate
+function log
+{
+  git log --graph --simplify-by-decoration --pretty=format:'%d' --all --decorate
 }
-if (Test-Path($ChocolateyProfile)) {
+if (Test-Path($ChocolateyProfile))
+{
   Import-Module "$ChocolateyProfile"
 }
 
-function launch_lazygit {
+function launch_lazygit
+{
   lazygit
 }
-function launch_pnpx {
+function launch_pnpx
+{
   pnpm dlx
 }
 
-function fz {
+function fz
+{
   fzf --preview 'bat --style numbers,changes --color=always {}'
 }
 
 # Git checkout nombre_rama
-function gc {
+function gc
+{
   param([String]$branch)
   git checkout $branch
 }
 
 # TODO Crear funcion que filtre el resultado de una lista segun un parametro
-function filtrar_ls {
+function filtrar_ls
+{
   param([String]$filtro)
   # ls | rg -i termino
 }
 
-function devs {
-Set-Location -Path ((Get-ChildItem -Directory -Path $dev | ForEach-Object { $_.FullName }) | fzf)
+function devs
+{
+  Set-Location -Path ((Get-ChildItem -Directory -Path $dev | ForEach-Object { $_.FullName }) | fzf)
 }
 
-function tldr_function {
+function tldr_function
+{
   tldr --list | fzf --preview "tldr {} --color=always" --preview-window=right,70% | ForEach-Object { tldr $_ }
 }
 
-function launch_rust_function {
+function launch_rust_function
+{
   Invoke-CmdScript 'C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat' # Para inicializar Rust
 }
 
-function which ($command) {
+function which ($command)
+{
   Get-Command -Name $command -ErrorAction SilentlyContinue |
     Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
 }
@@ -94,19 +105,23 @@ Set-Environment SHELL="C:\Program Files\PowerShell\7\pwsh.exe"
 # Get-Content nombre archivo.log -Wait
 
 
-if(Test-Path 'C:\Users\jdiaz\.inshellisense\key-bindings-pwsh.ps1' -PathType Leaf){. C:\Users\jdiaz\.inshellisense\key-bindings-pwsh.ps1}
+if(Test-Path 'C:\Users\jdiaz\.inshellisense\key-bindings-pwsh.ps1' -PathType Leaf)
+{. C:\Users\jdiaz\.inshellisense\key-bindings-pwsh.ps1
+}
 
-function hist { 
+function hist
+{ 
   $find = $args; 
   Write-Host "Buscando en historial {`$_ -like `"*$find*`"}"; 
-  Get-Content (Get-PSReadlineOption).HistorySavePath | ? {$_ -like "*$find*"} | Get-Unique | fzf
+  Get-Content (Get-PSReadlineOption).HistorySavePath | Where-Object {$_ -like "*$find*"} | Get-Unique | fzf
 }
 
 
 # Con esto puedo medir el performance hit de cada linea
 # Measure-Script -Top 3 $profile
 
-function previewSearchedFiles {
+function previewSearchedFiles
+{
   param([String]$search)
   fd $search | fzf --preview 'bat --color=always {}'
 }
